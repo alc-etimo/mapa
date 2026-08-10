@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ariane Lesnyak · Localization, Accessibility & Project Coordination</title>
+    <meta name="description" content="Portfolio of Ariane Lesnyak — localization, accessibility and translation project coordination. Application for MAPA Translations." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ============================================================
+        CUSTOM FONTS
+        ============================================================ */
+        @font-face {
+            font-family: 'Fiona Regular';
+            src: url('https://cdn.jsdelivr.net/gh/wastehabit/evo/docs/fonts/Fiona-Regular.woff2') format('woff2');
+            font-weight: 400; font-style: normal; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Acherus Grotesque Light';
+            src: url('https://cdn.jsdelivr.net/gh/wastehabit/evo/docs/fonts/AcherusGrotesque-Light.woff2') format('woff2');
+            font-weight: 300; font-style: normal; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Acherus Grotesque ExtraBold';
+            src: url('https://cdn.jsdelivr.net/gh/wastehabit/evo/docs/fonts/AcherusGrotesque-ExtraBold.woff2') format('woff2');
+            font-weight: 800; font-style: normal; font-display: swap;
+        }
+
+        /* ============================================================
+        RESET & BASE
+        ============================================================ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #f8f5f4;
+            color: #2d2d2d;
+            font-family: 'Acherus Grotesque Light', 'Roboto', sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url('https://cdn.jsdelivr.net/gh/wastehabit/evo/docs/images/world-map-gray.svg');
+            background-size: 80% auto;
+            background-position: center 30%;
+            background-repeat: no-repeat;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ============================================================
+        SCROLL REVEAL
+        ============================================================ */
+        .reveal { opacity: 0; transform: translateY(50px);
+            transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-60px);
+            transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(60px);
+            transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+        /* ============================================================
+        LAYOUT
+        ============================================================ */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+        section { position: relative; z-index: 1; padding: 5rem 0; }
+
+        .section-label {
+            font-family: 'Acherus Grotesque Light', 'Roboto', sans-serif;
+            font-size: .75rem; letter-spacing: 4px; text-transform: uppercase;
+            color: #6d1e91; font-weight: 500; display: block; margin-bottom: .5rem;
+        }
+
+        h2 {
+            font-family: 'Fiona Regular', 'Georgia', serif;
+            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            line-height: 1.15; letter-spacing: 1px; font-weight: 400; color: #1a1a1a;
+        }
+        h2 em { font-style: italic; font-family: 'Playfair Display', 'Georgia', serif; color: #6d1e91; }
+        p { font-size: 1.1rem; line-height: 1.9; color: #4a4a4a; font-weight: 300; max-width: 720px; }
+
+        /* ============================================================
+        NAVBAR
+        ============================================================ */
+        .navbar {
+            position: absolute; top: 0; left: 0; width: 100%;
+            padding: 1.6rem 0; z-index: 100; background: transparent; pointer-events: none;
+        }
+        .navbar-inner {
+            max-width: 900px; margin: 0 auto; padding: 0 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .navbar-inner > * { pointer-events: auto; }
+
+        .navbar-logo img {
+            height: 110px; width: auto; display: block;
+            background: transparent !important;
+            filter: drop-shadow(0 0 0 transparent);
+        }
+
+        .navbar-right { display: flex; align-items: center; gap: 1.2rem; }
+
+        .navbar-sections {
+            font-family: 'Acherus Grotesque ExtraBold', sans-serif;
+            font-size: 13px; line-height: 11.2px; letter-spacing: 2.2px;
+            color: #cb8316; text-transform: uppercase; cursor: pointer;
+            opacity: .85; transition: opacity .3s;
+        }
+        .navbar-sections:hover { opacity: 1; }
+
+        .navbar-hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 8px; }
+        .navbar-hamburger span {
+            display: block; width: 26px; height: 2.5px;
+            background: #cb8316; border-radius: 2px; transition: .3s; opacity: .85;
+        }
+
+        /* Menu overlay */
+        .menu-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,.3);
+            z-index: 1000; opacity: 0; visibility: hidden; transition: .3s;
+        }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+
+        .menu-box {
+            position: fixed; top: calc(50% - 10px); right: calc(50% - 10px);
+            transform: translate(50%, -50%) scale(.95);
+            width: 320px; max-width: 85vw; padding: 2rem 2rem 1.8rem;
+            background: #CA298A; border-radius: 16px; z-index: 1001;
+            opacity: 0; visibility: hidden; transition: .35s cubic-bezier(.16,1,.3,1);
+            display: flex; flex-direction: column; justify-content: center; align-items: flex-end;
+            box-shadow: 0 30px 60px rgba(0,0,0,.25);
+        }
+        .menu-box.active { opacity: 1; visibility: visible; transform: translate(50%, -50%) scale(1); }
+        .menu-box a {
+            font-family: 'Acherus Grotesque Light', sans-serif; font-size: 1.4rem; font-weight: 300;
+            letter-spacing: 2px; color: #fff; text-decoration: none; padding: .4rem 0; transition: .2s;
+            border-bottom: 1px solid rgba(255,255,255,.1); width: 100%; text-align: right;
+        }
+        .menu-box a:hover { opacity: .7; padding-right: .5rem; }
+        .menu-box a:last-child { border-bottom: none; }
+        .menu-close {
+            position: absolute; top: .8rem; right: 1.2rem; font-size: 1.4rem; color: #fff;
+            cursor: pointer; opacity: .6; transition: .2s; background: none; border: none;
+            font-family: 'Acherus Grotesque Light', sans-serif;
+        }
+        .menu-close:hover { opacity: 1; }
+
+        /* ============================================================
+        HERO
+        ============================================================ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            background-image: url('https://raw.githubusercontent.com/alc-etimo/mapa/refs/heads/main/hero.png');
+            background-size: 140% auto;
+            background-position: center top;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            background-color: #2b1533;
+            overflow: hidden;
+            padding: 2rem;
+        }
+        .hero::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,.25); z-index: 1; }
+
+        .hero-content { position: relative; z-index: 3; max-width: 1000px; padding-top: 120px; }
+
+        .hero-content h1 {
+            font-family: 'Fiona Regular';
+            font-size: 57px; line-height: 70.1px; letter-spacing: 5px;
+            color: #ffffff; font-weight: 400; margin-bottom: 1rem;
+        }
+        .hero-content .hero-sub-1 {
+            font-family: 'Acherus Grotesque Light';
+            font-size: 23px; line-height: 30.1px; letter-spacing: 6px;
+            color: #ffffff; font-weight: 300; margin: 1.4rem auto 0; max-width: 900px;
+        }
+        .hero-content .hero-sub-2 {
+            font-family: 'Playfair Display'; font-style: italic;
+            font-size: clamp(1.2rem, 2.5vw, 2rem); line-height: 1.6; letter-spacing: 1.5px;
+            color: #fff; margin: 1.8rem auto 0; font-weight: 400; max-width: 800px; opacity: .9;
+        }
+        .hero-content .btn-hero {
+            display: inline-block; margin-top: 2.8rem; background: #6d1e91; border-radius: 35px;
+            padding: 1.2rem 3rem; font-family: 'Roboto', sans-serif;
+            font-size: clamp(1rem, 1.4vw, 21px); letter-spacing: 2.5px; color: #fff;
+            text-decoration: none; font-weight: 500; border: none; cursor: pointer;
+            transition: background .3s, transform .3s, box-shadow .3s;
+        }
+        .hero-content .btn-hero:hover {
+            background: #7d2aa3; transform: translateY(-4px); box-shadow: 0 14px 32px rgba(109,30,145,.35);
+        }
+
+        .hero-curve {
+            position: absolute; bottom: -26px; left: 0; width: 100%; height: 50px;
+            z-index: 2; background: #F5F1EE; clip-path: ellipse(70% 100% at 50% 100%);
+            pointer-events: none;
+        }
+
+        /* ============================================================
+        WHO I AM
+        ============================================================ */
+        #who-i-am { background: #F5F1EE; padding: 6rem 0 5rem; }
+
+        .who-heading { text-align: center; margin-bottom: 4.5rem; }
+        .who-heading .who-kicker {
+            font-family: 'Playfair Display'; font-weight: 400;
+            font-size: 22px; line-height: 34.2px; letter-spacing: .9px; font-style:italic; color: #000000;
+            display: block;
+        }
+        .who-heading .who-title {
+            font-family: 'Fiona Regular', serif; font-weight: 400;
+            font-size: 42px; line-height: 24.2px; letter-spacing: .9px; color: #000000;
+            display: block; margin-top: .1rem;
+        }
+
+        .timeline { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1rem; position: relative; }
+
+        .timeline-item {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+            align-items: center; padding: 1.6rem 0; position: relative;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute; top: 0; bottom: 0; left: 50%;
+            width: 3px; transform: translateX(-50%);
+            background-image: url('https://mapatranslation.com/wp-content/uploads/2021/05/Rectangle7.png');
+            background-size: 3px 100%;
+            background-repeat: repeat-y;
+            background-color: #C9C2BC;
+            opacity: .9;
+        }
+
+        .timeline-item .timeline-image { padding-right: 1.6rem; display: flex; justify-content: flex-end; }
+        .timeline-item .timeline-image img {
+            width: 100%; height: 70%;  object-fit: contain; display: block;
+        }
+        .timeline-item .timeline-content { padding-left: 1.6rem; }
+
+        .timeline-item .step-label {
+            font-family: 'Acherus Grotesque ExtraBold', sans-serif; font-size: 11px;
+            letter-spacing: 3px; text-transform: uppercase; color: #6d1e91; display: block;
+            margin-bottom: .5rem;
+        }
+        .timeline-item .timeline-content h3 {
+            font-family: 'Fiona Regular', 'Georgia', serif; font-size: 1.7rem; font-weight: 400;
+            color: #2d2d2d; margin-bottom: .5rem; letter-spacing: .5px;
+        }
+        .timeline-item .timeline-content p {
+            font-size: .95rem; color: #4a4a4a; max-width: 100%; line-height: 1.75;
+        }
+
+        .hl {
+            font-family: 'Acherus Grotesque ExtraBold', sans-serif;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+            font-size: .85em; padding: .12em .6em; border-radius: 999px;
+            display: inline-block; line-height: 1.5; color: #ffffff;
+            white-space: nowrap;
+        }
+        .hl-orange { background: #DC890D; }
+        .hl-purple { background: #A44EAB; }
+        .hl-red    { background: #BC011D; }
+
+        .timeline-item:nth-child(even) .timeline-image {
+            order: 2; padding-right: 0; padding-left: 1.6rem; justify-content: flex-start;
+        }
+        .timeline-item:nth-child(even) .timeline-content {
+            order: 1; padding-left: 0; padding-right: 1.6rem; text-align: right;
+        }
+
+        /* ============================================================
+        FEATURED CLIENTS
+        ============================================================ */
+        #clients { padding: 4rem 0 5rem; background: #ffffff; }
+        #clients .section-title {
+            font-family: 'Acherus Grotesque Light', sans-serif;
+            font-size: 23px; line-height: 30.1px; letter-spacing: 6px;
+            text-transform: uppercase; color: #000000; text-align: center;
+            margin-bottom: 3rem; font-weight: 300;
+        }
+        .clients-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 2rem 2.5rem; align-items: center; justify-items: center;
+            max-width: 1000px; margin: 0 auto;
+        }
+        .clients-grid img {
+            max-height: 50px; width: auto;
+            filter: brightness(0) saturate(100%) invert(72%) sepia(87%) saturate(500%) hue-rotate(340deg) brightness(.95);
+            opacity: .85; background: transparent; display: block; object-fit: contain;
+        }
+
+        /* ============================================================
+        MY SERVICES
+        ============================================================ */
+        #services { background: #5C2086; padding: 4.5rem 0 5rem; color: #fff; }
+
+        #services .section-title {
+            font-family: 'Acherus Grotesque Light', sans-serif;
+            font-size: 23px; line-height: 30.1px; letter-spacing: 6px;
+            text-transform: uppercase; color: #ffffff; text-align: center;
+            margin-bottom: 2.5rem; font-weight: 300;
+        }
+
+        .services-wrap { max-width: 1100px; margin: 0 auto; }
+
+        .services-image { display: block; width: 100%; height: auto; margin: 0 auto 3rem; }
+
+        .services-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 2rem; width: 100%; margin: 0 auto; align-items: stretch;
+        }
+
+        .service-item {
+            background: rgba(255,255,255,.08); backdrop-filter: blur(4px);
+            padding: 2rem 1.8rem; border-radius: 18px; border: 1px solid rgba(255,255,255,.1);
+            text-align: left; transition: transform .3s, background .3s;
+        }
+        .service-item:hover { transform: translateY(-6px); background: rgba(255,255,255,.14); }
+        .service-item h3 {
+            font-family: 'Fiona Regular', 'Georgia', serif; font-size: 1.55rem; font-weight: 400;
+            color: #fff; margin-bottom: .9rem; letter-spacing: .5px;
+            min-height: 4.4rem; display: flex; align-items: flex-end;
+        }
+        .service-item ul { list-style: none; padding: 0; margin: 0; }
+        .service-item ul li {
+            position: relative; padding-left: 1.1rem; margin-bottom: .6rem;
+            font-size: .92rem; line-height: 1.65; color: rgba(255,255,255,.85); font-weight: 300;
+        }
+        .service-item ul li::before {
+            content: ''; position: absolute; left: 0; top: .62em;
+            width: 6px; height: 6px; border-radius: 50%; background: #DC890D;
+        }
+
+        /* ============================================================
+        LET'S BUILD
+        ============================================================ */
+        #cta-build {
+            padding: 6rem 2rem; text-align: center; position: relative; z-index: 1;
+            background-image: url('https://github.com/alc-etimo/mapa/blob/main/ready.png?raw=true');
+            background-size: cover; background-position: center;
+        }
+        #cta-build::before { content: ''; position: absolute; inset: 0; background: rgba(35,18,45,.55); z-index: 1; }
+        #cta-build .container { position: relative; z-index: 2; }
+        #cta-build h2 {
+            font-family: 'Fiona Regular', 'Georgia', serif; font-size: clamp(2.4rem, 6vw, 4.2rem);
+            color: #fff; line-height: 1.2; margin-bottom: 1.5rem;
+        }
+        #cta-build h2 em { font-family: 'Playfair Display', serif; font-style: italic; color: #b77fd6; }
+        #cta-build p { color: rgba(255,255,255,.8); max-width: 600px; margin: 0 auto 2.5rem; font-size: 1.15rem; }
+        #cta-build .btn-cta {
+            display: inline-block; background: #6d1e91; color: #fff; padding: 1.2rem 3.5rem;
+            border-radius: 35px; text-decoration: none; font-family: 'Roboto', sans-serif;
+            font-size: 1.1rem; letter-spacing: 2.5px; font-weight: 500; border: none; cursor: pointer;
+            box-shadow: 0 12px 32px rgba(109,30,145,.3); transition: background .3s, transform .3s, box-shadow .3s;
+        }
+        #cta-build .btn-cta:hover { background: #7d2aa3; transform: translateY(-4px); }
+
+        /* ============================================================
+        SERVICE SECTIONS (hidden by default)
+        ============================================================ */
+        .service-section {
+            display: none;
+            background: #ECE6EA;
+            padding: 0 0 4rem 0;
+        }
+        .service-section.visible {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================================
+        FOOTER
+        ============================================================ */
+        .footer-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 220px; }
+        .footer-left {
+            background: #6D1E91; display: flex; align-items: center; justify-content: center; padding: 2.5rem 2rem;
+        }
+        .footer-left a {
+            font-family: 'Acherus Grotesque ExtraBold', sans-serif; font-size: 32px; line-height: 40.9px;
+            letter-spacing: 9px; color: #fff; text-decoration: none; text-align: center; transition: opacity .3s;
+        }
+        .footer-left a:hover { opacity: .7; }
+        .footer-right {
+            background: #D6D0D4; display: flex; align-items: center; justify-content: flex-start;
+            padding: 2.5rem 3rem 2.5rem 2.5rem;
+        }
+        .footer-right ul { list-style: none; padding: 0; margin-left: -5px; }
+        .footer-right ul li {
+            font-family: 'Playfair Display', 'Georgia', serif; font-style: italic; font-size: 18px;
+            line-height: 27.4px; letter-spacing: .9px; color: #000; padding: .15rem 0;
+        }
+        .footer-right ul li a {
+            color: #000; text-decoration: none; transition: opacity .3s;
+        }
+        .footer-right ul li a:hover { opacity: .6; }
+        .footer-bottom {
+            background: #D6D0D4; padding: 1.5rem 2rem; text-align: center; border-top: 1px solid rgba(0,0,0,.05);
+        }
+        .footer-bottom p { font-size: 1rem; color: #2d2d2d; max-width: 100%; margin: 0; }
+        .footer-bottom .small { font-size: .85rem; color: #6d1e91; margin-top: .3rem; }
+        .footer-bottom .tiny { font-size: .75rem; color: #888; margin-top: .2rem; }
+
+        /* ============================================================
+        RESPONSIVE
+        ============================================================ */
+        @media (max-width: 1024px) {
+            .hero { background-size: cover; }
+            .who-heading .who-title { font-size: 64px; line-height: 58px; letter-spacing: 3px; }
+            .timeline-item { grid-template-columns: 1fr; gap: 1.2rem; text-align: center; }
+            .timeline-item::after { display: none; }
+            .timeline-item .timeline-image { order: 1 !important; padding: 0 !important; justify-content: center !important; }
+            .timeline-item .timeline-content { order: 2 !important; padding: 0 !important; text-align: center !important; }
+            .service-item { text-align: left; }
+            .services-grid { grid-template-columns: 1fr 1fr; }
+            .footer-split { grid-template-columns: 1fr; }
+            .footer-right { justify-content: center; padding: 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem 0; }
+            .navbar-inner { padding: 0 1.2rem; }
+            .navbar-logo img { height: 66px; }
+            .navbar-sections { font-size: 11px; letter-spacing: 1.5px; }
+            .navbar-hamburger { gap: 6px; }
+            .navbar-hamburger span { width: 22px; height: 2px; }
+            .services-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .footer-left a { font-size: 24px; line-height: 30px; letter-spacing: 6px; }
+            .footer-right ul li { font-size: 16px; line-height: 24px; }
+            .clients-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+            .clients-grid img { max-height: 35px; }
+            .menu-box { width: 280px; padding: 1.5rem; }
+            .menu-box a { font-size: 1.1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 40px; line-height: 40px; letter-spacing: 2px; }
+            .hero-content .hero-sub-1 { font-size: 15px; line-height: 22px; letter-spacing: 3px; }
+            .who-heading .who-kicker { font-size: 20px; line-height: 30px; }
+            .who-heading .who-title { font-size: 44px; line-height: 42px; letter-spacing: 2px; }
+            .timeline-item .timeline-image img { width: auto; height: 120%; }
+            .clients-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .footer-right ul li { font-size: 14px; line-height: 22px; }
+        }
+
+        /* ============================================================
+        STYLES FOR SERVICE SECTIONS (inclusive, coordination, localization-ai)
+        ============================================================ */
+        .service-section .case-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+            border: 1px solid #e8e0e4;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .service-section .case-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 48px rgba(109,30,145,0.07);
+        }
+        .service-section .case-card h3 {
+            font-family: 'Playfair Display','Georgia',serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #6d1e91;
+            margin: 0;
+        }
+        .service-section .case-card p {
+            font-size: 1rem;
+            color: #4a4a4a;
+            margin: 0;
+            flex: 1;
+        }
+        .service-section .case-number {
+            font-family: 'Acherus Grotesque ExtraBold',sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #cb8316;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .service-section .case-category {
+            font-family: 'Acherus Grotesque Light',sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #a07ab0;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Pulse animation for workflow steps */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; transform: scale(0.97); }
+        }
+        @keyframes slide {
+            0%, 100% { transform: translateX(0); opacity: 1; }
+            50% { transform: translateX(4px); opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <div class="navbar-logo">
+                <img src="https://github.com/alc-etimo/mapa/blob/main/logo.png?raw=true" alt="Ariane Lesnyak logo" />
+            </div>
+            <div class="navbar-right">
+                <span class="navbar-sections" id="menuToggle">SECTIONS</span>
+                <div class="navbar-hamburger" id="hamburgerToggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="menu-box" id="menuBox">
+        <button class="menu-close" id="menuClose">✕</button>
+        <a href="#top">HOME</a>
+        <a href="#who-i-am">WHO I AM</a>
+        <a href="#services">SERVICES</a>
+        <a href="#cta-build">CONTACT</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="top">
+        <div class="hero-content">
+            <h1>LANGUAGE IS ACCESS</h1>
+            <p class="hero-sub-1">Localization · Accessibility · Project Coordination</p>
+            <p class="hero-sub-2">
+                Every language carries someone's story.<br />
+                My work is making sure that story isn't lost.
+            </p>
+            <a href="#site-footer" class="btn-hero">See my work</a>
+        </div>
+        <div class="hero-curve"></div>
+    </section>
+
+    <!-- WHO I AM -->
+    <section id="who-i-am">
+        <div class="container">
+            <div class="who-heading reveal">
+                <span class="who-kicker">My journey to</span>
+                <span class="who-title">REMOVING<br> BARRIERS</span>
+            </div>
+
+            <div class="timeline">
+                <!-- Timeline items here - kept as in original -->
+                <div class="timeline-item reveal">
+                    <div class="timeline-image">
+                        <img src="https://github.com/alc-etimo/mapa/blob/main/origins.png?raw=true" alt="Origins" />
+                    </div>
+                    <div class="timeline-content">
+                        <span class="step-label">01 · Origins</span>
+                        <h3>Roots that span continents</h3>
+                        <p>
+                            My family carries stories of <span class="hl hl-orange">migration</span> — Spain, Germany,
+                            former Yugoslavia. Growing up surrounded by different languages and cultures, I learned
+                            early that communication is about more than words. It's about
+                            <span class="hl hl-orange">belonging</span>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-image">
+                        <img src="https://github.com/alc-etimo/mapa/blob/main/school.png?raw=true" alt="Childhood" />
+                    </div>
+                    <div class="timeline-content">
+                        <span class="step-label">02 · Childhood</span>
+                        <h3>Translating music, sharing connection</h3>
+                        <p>
+                            I used to translate song lyrics so my classmates could enjoy the music with me. It was my
+                            first realization that language could <span class="hl hl-purple">bring people together</span>
+                            — a small act of <span class="hl hl-purple">accessibility</span> that made others feel included.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-image">
+                        <img src="https://github.com/alc-etimo/mapa/blob/main/college.png?raw=true" alt="College" />
+                    </div>
+                    <div class="timeline-content">
+                        <span class="step-label">03 · College</span>
+                        <h3>Teaching, language and discovery</h3>
+                        <p>
+                            I entered the <span class="hl hl-red">University of São Paulo</span> to become a teacher,
+                            studying Portuguese and English. I wanted to help others
+                            <span class="hl hl-red">learn</span> — but I didn't yet know that my path would lead me
+                            beyond the classroom.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-image">
+                        <img src="https://github.com/alc-etimo/mapa/blob/main/accessibility.png?raw=true" alt="Accessibility" />
+                    </div>
+                    <div class="timeline-content">
+                        <span class="step-label">04 · A turning point</span>
+                        <h3>One lecture that changed everything</h3>
+                        <p>
+                            I attended a lecture about <span class="hl hl-purple">deaf children</span> born to hearing
+                            parents — children who grow up without full access to language. I couldn't stop thinking:
+                            <em>"How do they name the world?"</em> That question led me to study
+                            <span class="hl hl-purple">Libras</span> with Deaf professors.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-image">
+                        <img src="https://github.com/alc-etimo/mapa/blob/main/localization.png?raw=true" alt="Localization" />
+                    </div>
+                    <div class="timeline-content">
+                        <span class="step-label">05 · Localization</span>
+                        <h3>Helping stories cross borders</h3>
+                        <p>
+                            Working with major streaming platforms, independent filmmakers and international clients,
+                            I adapted scripts, <span class="hl hl-orange">subtitles</span> and audiovisual content for
+                            global audiences. My work helped Brazilian films reach
+                            <span class="hl hl-orange">international festivals</span>, secure funding and win awards.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-image">
+                        <img src="https://github.com/alc-etimo/mapa/blob/main/coordination.png?raw=true" alt="Coordination" />
+                    </div>
+                    <div class="timeline-content">
+                        <span class="step-label">06 · Coordination</span>
+                        <h3>Structuring systems at scale</h3>
+                        <p>
+                            I began developing processes, style guides, glossaries and
+                            <span class="hl hl-red">knowledge bases</span>. At Claro/TW, I led the intralingual
+                            translation of complex support procedures into clear, decision-based content for thousands
+                            of agents — <span class="hl hl-red">reducing friction</span> and improving customer experience.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED CLIENTS -->
+    <section id="clients">
+        <div class="container">
+            <div class="section-title reveal">Featured Clients</div>
+            <div class="clients-grid reveal">
+                <img src="https://github.com/alc-etimo/mapa/blob/main/Iyuno-SDI-Group-Logo.png?raw=true" alt="Iyuno" />
+                <img src="https://github.com/alc-etimo/mapa/blob/main/itc-global-trans.png?raw=true" alt="ITC Global" />
+<img src="https://github.com/alc-etimo/mapa/blob/main/acclaro-logo.webp?raw=true" alt="Acclaro" />
+           <img src="https://github.com/alc-etimo/mapa/blob/main/saga_logo.webp?raw=true" alt="Saga" style="margin-left:250px;margin-right:100px;"/>
+     <img src="https://github.com/alc-etimo/mapa/blob/main/claro-logo-att%20(2).png?raw=true" alt="Claro" style="margin-left:300px;"/>                
+             <br>   <img src="https://github.com/alc-etimo/mapa/blob/main/moshi-media-trans.png?raw=true" alt="Moshi Moshi" style="margin-left:200px;"/>
+                
+                <img src="https://github.com/alc-etimo/mapa/blob/main/tropical-dystopia-logo-trans.png?raw=true" alt="Tropical Dystopia" style="margin-left:300px;"/>
+                <img src="https://github.com/alc-etimo/mapa/blob/main/vsi-logo.png?raw=true" alt="VSI" style="margin-left:300px;"/>
+                <img src="https://github.com/alc-etimo/mapa/blob/main/tw-logo1.png?raw=true" alt="TW" style="margin-left:300px;"/>
+<img src="https://github.com/alc-etimo/mapa/blob/main/tabuleiro-filmes-logo.png?raw=true" alt="Tabuleiro Filmes" style="margin-left:300px;"/>
+            </div>
+        </div>
+    </section>
+
+    <!-- MY SERVICES -->
+    <section id="services">
+        <div class="container">
+            <div class="services-wrap">
+                <div class="section-title reveal">My services</div>
+
+                <img class="services-image reveal"
+                     src="https://github.com/alc-etimo/mapa/blob/main/services.png?raw=true"
+                     alt="Services illustration" />
+
+                <div class="services-grid reveal">
+                    <div class="service-item">
+                        <h3>Inclusive Communication</h3>
+                        <ul>
+                            <li>Accessibility-first content design</li>
+                            <li>Closed captioning and SDH</li>
+                            <li>Audio description scripting</li>
+                            <li>Inclusive localization that preserves identity</li>
+                        </ul>
+                    </div>
+                    <div class="service-item">
+                        <h3>Project Coordination &amp; Delivery</h3>
+                        <ul>
+                            <li>End-to-end project management</li>
+                            <li>Vendor sourcing and coordination</li>
+                            <li>Stakeholder communication</li>
+                            <li>Workflow documentation and QA oversight</li>
+                        </ul>
+                    </div>
+                    <div class="service-item">
+                        <h3>Localization &amp; AI</h3>
+                        <ul>
+                            <li>Audiovisual translation and subtitling</li>
+                            <li>AI output evaluation and post-editing</li>
+                            <li>Prompt engineering for language tasks</li>
+                            <li>Knowledge architecture at scale</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta-build">
+        <div class="container">
+            <div class="reveal">
+                <h2>Let's build<br /><em>something meaningful</em><br />together.</h2>
+                <p>
+                    Whether you're improving customer experiences, designing multilingual content,
+                    or scaling language operations, I'd love to help.
+                </p>
+                <a href="mailto:ariane.etimo@email.com" class="btn-cta">Start a conversation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SERVICE SECTIONS (hidden by default, revealed via footer links)
+    ============================================================ -->
+
+    <!-- ============================================================
+    INCLUSIVE COMMUNICATION — hidden section
+    ============================================================ -->
+    <section id="inclusive" class="service-section">
+        <div style="position:relative; width:100%; max-width:1263px; margin:0 auto; background:#ECE6EA;">
+            <div style="width:100%; height:auto; aspect-ratio:1263/387; background-image:url('https://github.com/alc-etimo/mapa/blob/main/inclusive-communication.png?raw=true'); background-size:cover; background-position:center; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem; position:relative;">
+                <div style="position:absolute; inset:0; background:rgba(0,0,0,0.35);"></div>
+                <div style="position:relative; z-index:2;">
+                    <span style="font-family:'Acherus Grotesque ExtraBold', sans-serif; font-size:16px; line-height:21.1px; letter-spacing:6px; color:#ffffff; text-transform:uppercase; display:block;">Inclusive Communication</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="max-width:1200px; margin:0 auto; padding:0 2rem;">
+            <div style="text-align:center; margin:3rem 0 2rem;">
+                <div style="max-width:800px; margin:0 auto; text-align:left;">
+                    <h2 style="font-family:'Playfair Display','Georgia',serif; font-style:italic; font-size:20px; line-height:30.7px; letter-spacing:1.5px; color:#6d1e91; font-weight:400; margin:0 0 1rem 0;">Making sure every voice is heard — and every identity is preserved.</h2>
+                    <p style="margin:0; font-size:18px; line-height:29.2px; color:#000000; font-family:'Acherus Grotesque Light',sans-serif; font-weight:300;"><span style="color:#6d1e91; font-weight:400;">Inclusive communication</span> is about more than accessibility — it's about representation, identity and belonging. Every project in this section shows how I approach translation and localization with empathy, cultural awareness and a commitment to preserving what makes each voice unique.</p>
+                </div>
+            </div>
+
+            <!-- CASE 01 — Accessibility & Identity -->
+            <div style="padding:2rem 0 3rem; border-bottom:1px solid #d5c4d9;">
+                <div style="width:100%; margin-bottom:2.5rem;">
+                    <span class="case-number">Case 01</span>
+                    <span class="case-category">Accessibility &amp; Identity</span>
+                    <h2 style="font-family:'Fiona Regular','Georgia',serif; font-size:clamp(2rem,4vw,3.2rem); line-height:1.15; letter-spacing:1px; font-weight:400; color:#1a1a1a; margin:0;">Preserving identity through accessibility.</h2>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:2.5rem;">
+                    <div class="case-card">
+                        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                            <h3>The challenge</h3>
+                        </div>
+                        <p>Closed captions are essential for accessibility, but they often simplify or erase sociolinguistic markers — accents, dialects, speech patterns — that are fundamental to character identity and representation.</p>
+                    </div>
+                    <div class="case-card">
+                        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                            <h3>What I observed</h3>
+                        </div>
+                        <p>In many closed captions, linguistic identity markers are treated as <strong style="color:#6d1e91;">errors</strong> to be corrected, rather than <strong style="color:#6d1e91;">features</strong> to be preserved.</p>
+                    </div>
+                    <div class="case-card">
+                        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                            <h3>My approach</h3>
+                        </div>
+                        <p>Instead of asking <em style="font-family:'Playfair Display',serif; font-style:italic; color:#6d1e91;">"Can the audience understand this?"</em>, I asked <em style="font-family:'Playfair Display',serif; font-style:italic; color:#6d1e91;">"What disappears when we simplify it?"</em></p>
+                    </div>
+                    <div class="case-card">
+                        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                            <h3>The solution</h3>
+                        </div>
+                        <p>I developed a practical framework that distinguishes between <strong style="color:#6d1e91;">actual errors</strong> (which should be corrected) and <strong style="color:#6d1e91;">identity markers</strong> (which should be preserved).</p>
+                    </div>
+                </div>
+
+                <!-- Before/After prints -->
+                <div style="margin-top:2.5rem;">
+                    <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; color:#2d2d2d; text-align:center; margin-bottom:0.5rem;">📸 The difference is visible</h4>
+                    <p style="text-align:center; font-size:0.95rem; color:#777; max-width:100%; margin-bottom:1.5rem;">Two captions from the same scene — one erases identity, the other preserves it.</p>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+                        <div style="background:#ffffff; border-radius:18px; padding:1.5rem; border:1px solid #e8e0e4; box-shadow:0 8px 30px rgba(0,0,0,0.04);">
+                            <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#c0392b; font-weight:500; display:block; margin-bottom:0.5rem;">Before: Identity Erased</span>
+                            <div style="background:#f8f0f0; border-radius:12px; padding:1rem; text-align:center; border:1px solid #e8d0d0; min-height:120px; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+                                <img src="https://github.com/alc-etimo/mapa/blob/main/case1-ex1.png?raw=true" alt="Caption without identity markers" style="max-width:100%; max-height:120px; object-fit:contain; border-radius:4px;" />
+                            </div>
+                            <p style="font-size:0.85rem; color:#c0392b; margin-top:0.8rem; font-weight:400;">❌ Identity erased. The viewer learns nothing about the speaker's background.</p>
+                        </div>
+                        <div style="background:#ffffff; border-radius:18px; padding:1.5rem; border:1px solid #6d1e91; box-shadow:0 8px 30px rgba(109,30,145,0.08);">
+                            <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#6d1e91; font-weight:500; display:block; margin-bottom:0.5rem;">After: Identity Preserved</span>
+                            <div style="background:#ede4f0; border-radius:12px; padding:1rem; text-align:center; border:1px solid #c4b0cc; min-height:120px; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+                                <img src="https://github.com/alc-etimo/mapa/blob/main/case1-ex2.png?raw=true" alt="Caption with identity markers preserved" style="max-width:100%; max-height:120px; object-fit:contain; border-radius:4px;" />
+                            </div>
+                            <p style="font-size:0.85rem; color:#6d1e91; margin-top:0.8rem; font-weight:400;">✅ Identity preserved. The viewer understands who is speaking — and why it matters.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Decision Protocol -->
+                <div style="margin-top:2.5rem; background:#ede4f0; border-radius:18px; padding:2rem; border-left:4px solid #6d1e91;">
+                    <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; color:#2d2d2d; margin-bottom:0.8rem;">📋 Decision Protocol: Error vs. Identity Marker</h4>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+                        <div style="background:#ffffff; border-radius:12px; padding:1.2rem 1.5rem; border:1px solid #e8e0e4;">
+                            <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#c0392b; font-weight:500; display:block; margin-bottom:0.3rem;">Treat as ERROR</span>
+                            <ul style="list-style:none; padding:0; font-size:0.9rem; color:#4a4a4a; line-height:1.8;"><li>• Grammatical mistakes</li><li>• Typos / misspellings</li><li>• Incoherent sentences</li><li>• Inaccurate information</li></ul>
+                        </div>
+                        <div style="background:#ffffff; border-radius:12px; padding:1.2rem 1.5rem; border:1px solid #6d1e91;">
+                            <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#6d1e91; font-weight:500; display:block; margin-bottom:0.3rem;">Preserve as IDENTITY MARKER</span>
+                            <ul style="list-style:none; padding:0; font-size:0.9rem; color:#4a4a4a; line-height:1.8;"><li>• Regional accents / dialects</li><li>• Sociolects / class markers</li><li>• Speech patterns / rhythm</li><li>• Cultural expressions</li></ul>
+                        </div>
+                    </div>
+                    <div style="margin-top:1.5rem; padding:1.2rem 1.5rem; background:#f8f5f4; border-radius:12px; border-left:4px solid #cb8316; border-right:4px solid #cb8316;">
+                        <p style="font-size:0.95rem; color:#2d2d2d; margin:0; max-width:100%; font-weight:400;"><strong style="color:#6d1e91;">The key insight:</strong> Not every deviation from standard language is an error. Sometimes, it's a story.</p>
+                    </div>
+                </div>
+
+                <!-- CASE 02 — Audiovisual Localization -->
+                <div style="padding:3rem 0 2rem; margin-top:2rem;">
+                    <div style="width:100%; margin-bottom:2.5rem;">
+                        <span class="case-number">Case 02</span>
+                        <span class="case-category">Audiovisual Localization</span>
+                        <h2 style="font-family:'Fiona Regular','Georgia',serif; font-size:clamp(2rem,4vw,3.2rem); line-height:1.15; letter-spacing:1px; font-weight:400; color:#1a1a1a; margin:0;">Helping stories cross borders.</h2>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:2.5rem;">
+                        <div class="case-card">
+                            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                                <h3>The challenge</h3>
+                            </div>
+                            <p>Independent productions rarely have the resources of large studios. Their scripts, subtitles and promotional materials must be translated with the same care as the films themselves.</p>
+                        </div>
+                        <div class="case-card">
+                            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                                <h3>What I observed</h3>
+                            </div>
+                            <p><strong style="color:#6d1e91;">Literal translation isn't enough.</strong> Every cultural reference, dialect, joke, silence and emotional nuance contributes to how audiences experience the story.</p>
+                        </div>
+                        <div class="case-card">
+                            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                                <h3>My approach</h3>
+                            </div>
+                            <p>I begin by understanding what the filmmaker wants the audience to feel — not simply what each sentence means. I adapt dialogue, rhythm, and terminology while preserving each character's identity.</p>
+                        </div>
+                        <div class="case-card">
+                            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                                <h3>The solution</h3>
+                            </div>
+                            <p>I delivered localized subtitles, translated scripts and accessibility assets that respected technical standards while remaining emotionally natural — making audiences forget they are reading subtitles.</p>
+                        </div>
+                    </div>
+
+                    <!-- Poster + Synopsis -->
+                    <div style="display:grid; grid-template-columns:1fr 1.5fr; gap:2.5rem; margin:2.5rem 0 3rem; align-items:stretch;">
+                        <div style="background:#ede4f0; border-radius:18px; padding:1.5rem; text-align:center; border:1px solid #e8e0e4; display:flex; flex-direction:column; justify-content:center;">
+                            <div style="background:#d5c4d9; border-radius:12px; min-height:280px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1rem; flex:1;">
+                                <img src="https://github.com/alc-etimo/mapa/blob/main/animais-poster.jpg?raw=true" alt="The Cutest and Funniest Animals in the World poster" style="max-width:100%; max-height:300px; object-fit:contain; border-radius:8px;" />
+                            </div>
+                            <p style="font-size:0.7rem; color:#888; margin-top:0.5rem;">IMDB · Berlinale 2021</p>
+                        </div>
+                        <div style="background:#ffffff; border-radius:18px; padding:2rem; border:1px solid #e8e0e4; box-shadow:0 8px 30px rgba(0,0,0,0.04); display:flex; flex-direction:column; justify-content:center;">
+                            <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#6d1e91; font-weight:500; display:block; margin-bottom:0.5rem;">Synopsis</span>
+                            <p style="font-size:1rem; color:#4a4a4a; line-height:1.8; max-width:100%;"><em style="font-family:'Playfair Display',serif; font-style:italic; color:#2d2d2d;">"The Cutest and Funniest Animals in the World"</em> follows Jorge, a 70-year-old janitor at a motel who secretly records the sounds of guests — and sells them to another man, with whom he develops an unexpected affectionate relationship.</p>
+                            <p style="font-size:1rem; color:#4a4a4a; line-height:1.8; max-width:100%; margin-top:0.8rem;">The film explores themes of <strong style="color:#6d1e91;">connection, technology, intimacy and identity</strong> — all mediated through sound and silence.</p>
+                            <div style="margin-top:1rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
+                                <span style="background:#ede4f0; padding:0.2rem 0.8rem; border-radius:20px; font-size:0.7rem; color:#6d1e91;">🏆 Berlinale 2021</span>
+                                <span style="background:#ede4f0; padding:0.2rem 0.8rem; border-radius:20px; font-size:0.7rem; color:#6d1e91;">🎬 Lacuna Filmes</span>
+                                <span style="background:#ede4f0; padding:0.2rem 0.8rem; border-radius:20px; font-size:0.7rem; color:#6d1e91;">📝 Script adaptation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Before/After typing -->
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin:2rem 0 2.5rem;">
+                        <div style="background:#ffffff; border-radius:18px; padding:2rem; border:1px solid #e8e0e4; box-shadow:0 8px 30px rgba(0,0,0,0.04);">
+                            <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#c0392b; font-weight:500; display:block; margin-bottom:0.5rem;">Before: Original Script (PT-BR)</span>
+                            <div style="background:#f8f0f0; border-radius:12px; padding:1.5rem; font-style:italic; font-size:1rem; color:#5a3d6a; min-height:120px; display:flex; align-items:center;">
+                                <p style="max-width:100%; margin:0; line-height:1.7;">"Jorge tem 70 anos e é um dos faxineiros mais caprichosos do Motel Paradise, com um único detalhe: ele grava escondido os áudios dos frequentadores das suítes."</p>
+                            </div>
+                            <p style="font-size:0.8rem; color:#777; margin-top:0.5rem;">Original Brazilian Portuguese · Rich in character detail</p>
+                        </div>
+                        <div style="background:#ffffff; border-radius:18px; padding:2rem; border:1px solid #6d1e91; box-shadow:0 8px 30px rgba(109,30,145,0.08);">
+                            <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#6d1e91; font-weight:500; display:block; margin-bottom:0.5rem;">After: Localized English Version</span>
+                            <div style="background:#ede4f0; border-radius:12px; padding:1.5rem; font-style:italic; font-size:1rem; color:#2d2d2d; min-height:120px; display:flex; align-items:center;">
+                                <p style="max-width:100%; margin:0; line-height:1.7;" id="typing-text"><span id="typewriter"></span><span id="cursor" style="display:inline-block; width:2px; height:1.2em; background:#6d1e91; margin-left:2px; animation:blink 0.9s step-end infinite;"></span></p>
+                            </div>
+                            <p style="font-size:0.8rem; color:#6d1e91; margin-top:0.5rem; font-weight:400;">✅ Adapted for cultural resonance · Preserves tone and identity</p>
+                        </div>
+                    </div>
+
+                    <!-- Metrics -->
+                    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin-top:1.5rem; padding:2rem; background:#f8f5f4; border-radius:18px; border:1px solid #e8e0e4;">
+                        <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">1M+</strong><span style="font-size:0.8rem; color:#777;">minutes localized</span></div>
+                        <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">EN · FR · ES</strong><span style="font-size:0.8rem; color:#777;">Languages supported</span></div>
+                        <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">Festival</strong><span style="font-size:0.8rem; color:#777;">Submissions &amp; funding</span></div>
+                        <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">IMDB</strong><span style="font-size:0.8rem; color:#777;">Accredited productions</span></div>
+                    </div>
+
+                    <!-- Quote -->
+                    <div style="margin-top:3rem; padding:1.5rem 2rem; background:#f8f5f4; border-radius:16px; text-align:center; border-left:4px solid #cb8316; border-right:4px solid #cb8316;">
+                        <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.5rem; color:#2d2d2d; max-width:100%; margin:0;">"Stories don't cross borders by themselves.<br />Someone has to rebuild them carefully, preserving everything that makes them feel human."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    PROJECT COORDINATION — hidden section
+    ============================================================ -->
+    <section id="coordination" class="service-section">
+        <div style="position:relative; width:100%; max-width:1263px; margin:0 auto; background:#ECE6EA;">
+            <div style="width:100%; height:auto; aspect-ratio:1263/387; background-image:url('https://github.com/alc-etimo/mapa/blob/main/project-coordination.png?raw=true'); background-size:cover; background-position:center; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem; position:relative;">
+                <div style="position:absolute; inset:0; background:rgba(0,0,0,0.35);"></div>
+                <div style="position:relative; z-index:2;">
+                    <span style="font-family:'Acherus Grotesque ExtraBold', sans-serif; font-size:16px; line-height:21.1px; letter-spacing:6px; color:#ffffff; text-transform:uppercase; display:block;">Project Coordination</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="max-width:1200px; margin:0 auto; padding:0 2rem;">
+            <div style="text-align:center; margin:3rem 0 2rem;">
+                <div style="max-width:800px; margin:0 auto; text-align:left;">
+                    <h2 style="font-family:'Playfair Display','Georgia',serif; font-style:italic; font-size:20px; line-height:30.7px; letter-spacing:1.5px; color:#6d1e91; font-weight:400; margin:0 0 1rem 0;">Turning operational data into actionable decisions.</h2>
+                    <p style="margin:0; font-size:18px; line-height:29.2px; color:#000000; font-family:'Acherus Grotesque Light',sans-serif; font-weight:300;"><span style="color:#6d1e91; font-weight:400;">Project coordination</span> is about more than managing tasks — it's about structuring workflows, validating data, and enabling teams to make informed decisions. This section shows how I use tools, processes and operational thinking to keep projects on track.</p>
+                </div>
+            </div>
+
+            <!-- CASE 01 — Excel & Google Sheets -->
+            <div style="padding:2rem 0 3rem; border-bottom:1px solid #d5c4d9;">
+                <div style="width:100%; margin-bottom:2.5rem;">
+                    <span class="case-number">Case 01</span>
+                    <span class="case-category">Operational Intelligence</span>
+                    <h2 style="font-family:'Fiona Regular','Georgia',serif; font-size:clamp(2rem,4vw,3.2rem); line-height:1.15; letter-spacing:1px; font-weight:400; color:#1a1a1a; margin:0;">Excel &amp; Google Sheets: daily operational tool.</h2>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:2.5rem;">
+                    <div class="case-card">
+                        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                            <h3>The challenge</h3>
+                        </div>
+                        <p>At TeamWorker / Claro, I needed to transform raw editorial quality data into actionable insights for stakeholders, while maintaining a scalable and consistent QA tracking system.</p>
+                    </div>
+                    <div class="case-card">
+                        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                            <h3>What I observed</h3>
+                        </div>
+                        <p>Raw QA data was scattered and inconsistent. Stakeholders needed clear, visual reports to make decisions. The system needed to be both rigorous for QA and intuitive for non-technical audiences.</p>
+                    </div>
+                    <div class="case-card">
+                        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                            <h3>My approach</h3>
+                        </div>
+                        <p>I built a centralized QA tracker in Excel and Google Sheets, categorizing errors by type (grammar, formatting, taxonomy, plain-language), and used formulas, pivot tables and filtered views to extract monthly indicators.</p>
+                    </div>
+                    <div class="case-card">
+                        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                            <h3>The solution</h3>
+                        </div>
+                        <p>I turned raw QA rows into stakeholder-ready dashboards, training plans and monthly reports — enabling data-driven decisions and targeted writer improvement.</p>
+                    </div>
+                </div>
+
+                <!-- Mock Excel and Dashboard -->
+                <div style="margin-top:2.5rem;">
+                    <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; color:#2d2d2d; text-align:center; margin-bottom:0.5rem;">🔄 From raw data to actionable insights</h4>
+                    <p style="text-align:center; font-size:0.95rem; color:#777; max-width:100%; margin-bottom:1.5rem;">The workflow that turned scattered QA records into monthly dashboards and training plans.</p>
+
+                    <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:0.5rem; align-items:center; margin-bottom:2.5rem;">
+                        <div style="background:#6d1e91; color:#fff; padding:0.8rem; border-radius:8px; text-align:center; font-size:0.75rem; font-weight:600; letter-spacing:0.5px; animation:pulse 2s infinite;">Raw QA<br><span style="font-size:0.6rem; font-weight:300; display:block;">(Excel filter)</span></div>
+                        <div style="text-align:center; font-size:1.5rem; color:#cb8316; animation:slide 1.5s infinite;">→</div>
+                        <div style="background:#6d1e91; color:#fff; padding:0.8rem; border-radius:8px; text-align:center; font-size:0.75rem; font-weight:600; letter-spacing:0.5px; animation:pulse 2s infinite 0.5s;">Filtered<br><span style="font-size:0.6rem; font-weight:300; display:block;">Views</span></div>
+                        <div style="text-align:center; font-size:1.5rem; color:#cb8316; animation:slide 1.5s infinite 0.3s;">→</div>
+                        <div style="background:#6d1e91; color:#fff; padding:0.8rem; border-radius:8px; text-align:center; font-size:0.75rem; font-weight:600; letter-spacing:0.5px; animation:pulse 2s infinite 1s;">Monthly<br><span style="font-size:0.6rem; font-weight:300; display:block;">Dashboard</span></div>
+                        <div style="text-align:center; font-size:1.5rem; color:#cb8316; animation:slide 1.5s infinite 0.6s;">→</div>
+                        <div style="background:#6d1e91; color:#fff; padding:0.8rem; border-radius:8px; text-align:center; font-size:0.75rem; font-weight:600; letter-spacing:0.5px; animation:pulse 2s infinite 1.5s;">Stakeholder<br><span style="font-size:0.6rem; font-weight:300; display:block;">Report</span></div>
+                        <div style="text-align:center; font-size:1.5rem; color:#cb8316; animation:slide 1.5s infinite 0.9s;">→</div>
+                        <div style="background:#6d1e91; color:#fff; padding:0.8rem; border-radius:8px; text-align:center; font-size:0.75rem; font-weight:600; letter-spacing:0.5px; animation:pulse 2s infinite 2s;">Training<br><span style="font-size:0.6rem; font-weight:300; display:block;">Workshop</span></div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+                        <div style="background:#ffffff; border-radius:18px; padding:1.5rem; border:1px solid #e8e0e4; box-shadow:0 8px 30px rgba(0,0,0,0.04);">
+                            <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#6d1e91; font-weight:500; display:block; margin-bottom:0.5rem;">Raw QA Tracker (Excel)</span>
+                            <div style="background:#f8f5f4; border-radius:12px; padding:1rem; min-height:200px; border:1px solid #e8e0e4; overflow:hidden;">
+                                <div style="font-size:0.7rem; font-family:'Courier New',monospace;">
+                                    <div style="display:grid; grid-template-columns:0.5fr 1.5fr 1fr 1fr 1fr 1fr; gap:0.2rem; background:#6d1e91; color:#fff; padding:0.3rem; font-weight:bold; border-radius:4px 4px 0 0;"><span>#</span><span>Content</span><span>Error Type</span><span>Severity</span><span>Status</span><span>Date</span></div>
+                                    <div style="display:grid; grid-template-columns:0.5fr 1.5fr 1fr 1fr 1fr 1fr; gap:0.2rem; padding:0.3rem; background:#ffffff; border-bottom:1px solid #e8e0e4;"><span>1</span><span>System Steps – Exclude</span><span>Formatting</span><span style="color:#c0392b;">Major</span><span>Pending</span><span>03/15</span></div>
+                                    <div style="display:grid; grid-template-columns:0.5fr 1.5fr 1fr 1fr 1fr 1fr; gap:0.2rem; padding:0.3rem; background:#f9f9f9; border-bottom:1px solid #e8e0e4;"><span>2</span><span>Process – Billing Inquiry</span><span>Taxonomy</span><span style="color:#e67e22;">Minor</span><span>Resolved</span><span>03/14</span></div>
+                                    <div style="display:grid; grid-template-columns:0.5fr 1.5fr 1fr 1fr 1fr 1fr; gap:0.2rem; padding:0.3rem; background:#ffffff; border-bottom:1px solid #e8e0e4;"><span>3</span><span>Client Procedures – Renewal</span><span>Grammar</span><span style="color:#c0392b;">Major</span><span>In Review</span><span>03/13</span></div>
+                                    <div style="display:grid; grid-template-columns:0.5fr 1.5fr 1fr 1fr 1fr 1fr; gap:0.2rem; padding:0.3rem; background:#f9f9f9; border-bottom:1px solid #e8e0e4;"><span>4</span><span>Policy Management – Update</span><span>Plain Language</span><span style="color:#e67e22;">Minor</span><span>Resolved</span><span>03/12</span></div>
+                                    <div style="display:grid; grid-template-columns:0.5fr 1.5fr 1fr 1fr 1fr 1fr; gap:0.2rem; padding:0.3rem; background:#ffffff; border-bottom:1px solid #e8e0e4;"><span>5</span><span>Account Activation – New</span><span>Formatting</span><span style="color:#c0392b;">Major</span><span>Pending</span><span>03/11</span></div>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; padding:0.5rem 0.3rem; background:#f0ecf0; border-radius:0 0 4px 4px; font-size:0.65rem; color:#6d1e91;"><span>🔍 Filter: All · Major · Minor</span><span style="text-align:right;">📊 15 entries · 3 pending</span></div>
+                                </div>
+                            </div>
+                            <p style="font-size:0.8rem; color:#777; margin-top:0.5rem;">Filtered views → monthly indicators · Pivot tables</p>
+                        </div>
+                        <div style="background:#ffffff; border-radius:18px; padding:1.5rem; border:1px solid #e8e0e4; box-shadow:0 8px 30px rgba(0,0,0,0.04);">
+                            <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#6d1e91; font-weight:500; display:block; margin-bottom:0.5rem;">Monthly Editorial QA Dashboard</span>
+                            <div style="background:#f8f5f4; border-radius:12px; padding:1rem; min-height:200px; border:1px solid #e8e0e4;">
+                                <div style="font-size:0.7rem;">
+                                    <div style="text-align:center; font-weight:600; color:#2d2d2d; padding-bottom:0.5rem; border-bottom:2px solid #6d1e91; margin-bottom:0.8rem;">Editorial QA Dashboard — March 2026</div>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.5rem; margin-bottom:0.8rem;">
+                                        <div style="background:#ede4f0; border-radius:6px; padding:0.5rem; text-align:center;"><div style="font-size:0.9rem; font-weight:600; color:#6d1e91;">94%</div><div style="font-size:0.55rem; color:#777;">Accuracy</div></div>
+                                        <div style="background:#ede4f0; border-radius:6px; padding:0.5rem; text-align:center;"><div style="font-size:0.9rem; font-weight:600; color:#6d1e91;">12</div><div style="font-size:0.55rem; color:#777;">Major Issues</div></div>
+                                        <div style="background:#ede4f0; border-radius:6px; padding:0.5rem; text-align:center;"><div style="font-size:0.9rem; font-weight:600; color:#6d1e91;">28</div><div style="font-size:0.55rem; color:#777;">Minor Issues</div></div>
+                                    </div>
+                                    <div style="margin-bottom:0.8rem;">
+                                        <div style="display:flex; justify-content:space-between; font-size:0.55rem; color:#777; margin-bottom:0.2rem;"><span>Grammar</span><span>Formatting</span><span>Taxonomy</span><span>Plain Lang.</span></div>
+                                        <div style="display:flex; gap:0.3rem; height:40px; align-items:flex-end;"><div style="flex:1; background:#6d1e91; height:32px; border-radius:4px 4px 0 0;"></div><div style="flex:1; background:#cb8316; height:24px; border-radius:4px 4px 0 0;"></div><div style="flex:1; background:#6d1e91; height:18px; border-radius:4px 4px 0 0;"></div><div style="flex:1; background:#cb8316; height:12px; border-radius:4px 4px 0 0;"></div></div>
+                                    </div>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; font-size:0.6rem; color:#777; border-top:1px solid #e8e0e4; padding-top:0.5rem;"><span>📈 +5% vs last month</span><span style="text-align:right;">✅ 3 writers trained</span></div>
+                                </div>
+                            </div>
+                            <p style="font-size:0.8rem; color:#777; margin-top:0.5rem;">Rolled up from tracker · Stakeholder-ready · Actionable insights</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top:2.5rem; padding:1.5rem 2rem; background:#f8f5f4; border-radius:16px; border-left:4px solid #cb8316; border-right:4px solid #cb8316;">
+                    <p style="font-size:0.95rem; color:#2d2d2d; margin:0; max-width:100%; text-align:center; font-weight:400;"><strong style="color:#6d1e91;">The key insight:</strong> Data is only as valuable as the decisions it enables. My role was to bridge the gap between raw QA records and actionable stakeholder intelligence.</p>
+                </div>
+
+                <!-- CASE 02 — Onboarding & Training -->
+                <div style="padding:3rem 0 2rem; margin-top:2rem;">
+                    <div style="width:100%; margin-bottom:2.5rem;">
+                        <span class="case-number">Case 02</span>
+                        <span class="case-category">People &amp; Process</span>
+                        <h2 style="font-family:'Fiona Regular','Georgia',serif; font-size:clamp(2rem,4vw,3.2rem); line-height:1.15; letter-spacing:1px; font-weight:400; color:#1a1a1a; margin:0;">Structuring onboarding &amp; training for quality at scale.</h2>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:2.5rem;">
+                        <div class="case-card">
+                            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                                <h3>The challenge</h3>
+                            </div>
+                            <p>New linguists and writers arrive with different levels of experience and familiarity with editorial standards. Without a structured process, quality varies and ramp-up time is unpredictable.</p>
+                        </div>
+                        <div class="case-card">
+                            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                                <h3>What I observed</h3>
+                            </div>
+                            <p><strong style="color:#6d1e91;">Without clear onboarding and training, the cost of quality is always higher.</strong> Teams waste time on avoidable errors, and stakeholders lose confidence in deliverables.</p>
+                        </div>
+                        <div class="case-card">
+                            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                                <h3>My approach</h3>
+                            </div>
+                            <p>I designed a structured onboarding flow with clear stages: Test → Evaluation → Approval → Registration → Permissions → Onboarding. Every new team member follows the same path, ensuring consistency from day one.</p>
+                        </div>
+                        <div class="case-card">
+                            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                                <h3>The solution</h3>
+                            </div>
+                            <p>A replicable onboarding process that ensures every new linguist understands the editorial standards, system permissions and quality expectations before they start producing — <strong style="color:#6d1e91;">reducing errors and accelerating time-to-productivity</strong>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Onboarding Flow -->
+                    <div style="margin-top:2.5rem;">
+                        <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; color:#2d2d2d; text-align:center; margin-bottom:0.5rem;">👥 From testing to production</h4>
+                        <p style="text-align:center; font-size:0.95rem; color:#777; max-width:100%; margin-bottom:1.5rem;">The onboarding flow that ensures every new team member is ready to deliver quality work.</p>
+
+                        <div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:0.3rem; align-items:center; margin-bottom:2.5rem;">
+                            <div style="background:#6d1e91; color:#fff; padding:0.6rem 0.3rem; border-radius:8px; text-align:center; font-size:0.65rem; font-weight:600; letter-spacing:0.3px; animation:pulse 2s infinite;">Test<br><span style="font-size:0.5rem; font-weight:300; display:block;">Skills</span></div>
+                            <div style="text-align:center; font-size:1.2rem; color:#cb8316; animation:slide 1.5s infinite;">→</div>
+                            <div style="background:#6d1e91; color:#fff; padding:0.6rem 0.3rem; border-radius:8px; text-align:center; font-size:0.65rem; font-weight:600; letter-spacing:0.3px; animation:pulse 2s infinite 0.4s;">Eval<br><span style="font-size:0.5rem; font-weight:300; display:block;">Quality</span></div>
+                            <div style="text-align:center; font-size:1.2rem; color:#cb8316; animation:slide 1.5s infinite 0.3s;">→</div>
+                            <div style="background:#6d1e91; color:#fff; padding:0.6rem 0.3rem; border-radius:8px; text-align:center; font-size:0.65rem; font-weight:600; letter-spacing:0.3px; animation:pulse 2s infinite 0.8s;">Approve<br><span style="font-size:0.5rem; font-weight:300; display:block;">Decision</span></div>
+                            <div style="text-align:center; font-size:1.2rem; color:#cb8316; animation:slide 1.5s infinite 0.6s;">→</div>
+                            <div style="background:#6d1e91; color:#fff; padding:0.6rem 0.3rem; border-radius:8px; text-align:center; font-size:0.65rem; font-weight:600; letter-spacing:0.3px; animation:pulse 2s infinite 1.2s;">Register<br><span style="font-size:0.5rem; font-weight:300; display:block;">System</span></div>
+                            <div style="text-align:center; font-size:1.2rem; color:#cb8316; animation:slide 1.5s infinite 0.9s;">→</div>
+                            <div style="background:#6d1e91; color:#fff; padding:0.6rem 0.3rem; border-radius:8px; text-align:center; font-size:0.65rem; font-weight:600; letter-spacing:0.3px; animation:pulse 2s infinite 1.6s;">Permissions<br><span style="font-size:0.5rem; font-weight:300; display:block;">Access</span></div>
+                            <div style="text-align:center; font-size:1.2rem; color:#cb8316; animation:slide 1.5s infinite 1.2s;">→</div>
+                            <div style="background:#6d1e91; color:#fff; padding:0.6rem 0.3rem; border-radius:8px; text-align:center; font-size:0.65rem; font-weight:600; letter-spacing:0.3px; animation:pulse 2s infinite 2s;">Onboard<br><span style="font-size:0.5rem; font-weight:300; display:block;">Ready</span></div>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+                            <div style="background:#ffffff; border-radius:18px; padding:1.5rem; border:1px solid #e8e0e4; box-shadow:0 8px 30px rgba(0,0,0,0.04);">
+                                <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#6d1e91; font-weight:500; display:block; margin-bottom:0.5rem;">Permission Assignment</span>
+                                <div style="background:#f8f5f4; border-radius:12px; padding:1rem; border:1px solid #e8e0e4;">
+                                    <div style="font-size:0.7rem; font-family:'Courier New',monospace;">
+                                        <div style="display:grid; grid-template-columns:1.5fr 1fr 1.5fr; gap:0.3rem; background:#6d1e91; color:#fff; padding:0.3rem; font-weight:bold; border-radius:4px 4px 0 0;"><span>Name</span><span>Role</span><span>Permission</span></div>
+                                        <div style="display:grid; grid-template-columns:1.5fr 1fr 1.5fr; gap:0.3rem; padding:0.3rem; background:#ffffff; border-bottom:1px solid #e8e0e4;"><span>Rafael Lima</span><span>Writer</span><span style="color:#6d1e91;">Edit</span></div>
+                                        <div style="display:grid; grid-template-columns:1.5fr 1fr 1.5fr; gap:0.3rem; padding:0.3rem; background:#f9f9f9; border-bottom:1px solid #e8e0e4;"><span>Ana Silva</span><span>Editor</span><span style="color:#6d1e91;">Edit &amp; Review</span></div>
+                                        <div style="display:grid; grid-template-columns:1.5fr 1fr 1.5fr; gap:0.3rem; padding:0.3rem; background:#ffffff; border-bottom:1px solid #e8e0e4;"><span>Carlos Santos</span><span>Reviewer</span><span style="color:#6d1e91;">Review Only</span></div>
+                                        <div style="display:grid; grid-template-columns:1.5fr 1fr 1.5fr; gap:0.3rem; padding:0.3rem; background:#f9f9f9;"><span>Mariana Costa</span><span>Writer</span><span style="color:#6d1e91;">Edit</span></div>
+                                    </div>
+                                </div>
+                                <p style="font-size:0.8rem; color:#777; margin-top:0.5rem;">Role-based permissions · System access · Clear accountability</p>
+                            </div>
+                            <div style="background:#ffffff; border-radius:18px; padding:1.5rem; border:1px solid #e8e0e4; box-shadow:0 8px 30px rgba(0,0,0,0.04);">
+                                <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#6d1e91; font-weight:500; display:block; margin-bottom:0.5rem;">Training &amp; Documentation</span>
+                                <div style="background:#f8f5f4; border-radius:12px; padding:1rem; border:1px solid #e8e0e4; min-height:150px; display:flex; flex-direction:column; justify-content:center;">
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+                                        <div style="background:#ede4f0; border-radius:6px; padding:0.8rem; text-align:center;"><span style="display:block; font-size:1.5rem; margin-bottom:0.2rem;">📖</span><span style="font-size:0.65rem; font-weight:600; color:#6d1e91;">Style Guide</span><span style="font-size:0.55rem; color:#777; display:block;">Editorial standards</span></div>
+                                        <div style="background:#ede4f0; border-radius:6px; padding:0.8rem; text-align:center;"><span style="display:block; font-size:1.5rem; margin-bottom:0.2rem;">📋</span><span style="font-size:0.65rem; font-weight:600; color:#6d1e91;">QA Checklist</span><span style="font-size:0.55rem; color:#777; display:block;">Review criteria</span></div>
+                                        <div style="background:#ede4f0; border-radius:6px; padding:0.8rem; text-align:center;"><span style="display:block; font-size:1.5rem; margin-bottom:0.2rem;">🗂️</span><span style="font-size:0.65rem; font-weight:600; color:#6d1e91;">SOPs</span><span style="font-size:0.55rem; color:#777; display:block;">Process guides</span></div>
+                                        <div style="background:#ede4f0; border-radius:6px; padding:0.8rem; text-align:center;"><span style="display:block; font-size:1.5rem; margin-bottom:0.2rem;">🎓</span><span style="font-size:0.65rem; font-weight:600; color:#6d1e91;">Workshops</span><span style="font-size:0.55rem; color:#777; display:block;">Training sessions</span></div>
+                                    </div>
+                                </div>
+                                <p style="font-size:0.8rem; color:#777; margin-top:0.5rem;">Documentation that scales · Training that sticks</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:2.5rem; display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; padding:2rem; background:#ffffff; border-radius:18px; border:1px solid #e8e0e4; box-shadow:0 8px 30px rgba(0,0,0,0.04);">
+                        <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">30+</strong><span style="font-size:0.8rem; color:#777;">Writers onboarded</span></div>
+                        <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">4</strong><span style="font-size:0.8rem; color:#777;">Training modules</span></div>
+                        <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">15+</strong><span style="font-size:0.8rem; color:#777;">SOPs &amp; guides</span></div>
+                        <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">100%</strong><span style="font-size:0.8rem; color:#777;">Consistency</span></div>
+                    </div>
+
+                    <div style="margin-top:2.5rem; padding:1.5rem 2rem; background:#f8f5f4; border-radius:16px; border-left:4px solid #cb8316; border-right:4px solid #cb8316;">
+                        <p style="font-size:0.95rem; color:#2d2d2d; margin:0; max-width:100%; text-align:center; font-weight:400;"><strong style="color:#6d1e91;">The bottom line:</strong> Structured onboarding and training aren't overhead — they're the foundation of quality at scale.</p>
+                    </div>
+
+                    <div style="margin-top:3rem; padding:1.5rem 2rem; background:#f8f5f4; border-radius:16px; text-align:center; border-left:4px solid #cb8316; border-right:4px solid #cb8316;">
+                        <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.5rem; color:#2d2d2d; max-width:100%; margin:0;">"Quality is not an accident. It's the result of clear processes, structured training and a shared understanding of what good looks like."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    LOCALIZATION & AI — hidden section
+    ============================================================ -->
+    <section id="localization-ai" class="service-section">
+        <div style="position:relative; width:100%; max-width:1263px; margin:0 auto; background:#ECE6EA;">
+            <div style="width:100%; height:auto; aspect-ratio:1263/387; background-image:url('https://github.com/alc-etimo/mapa/blob/main/localization-and-ai.png?raw=true'); background-size:cover; background-position:center; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem; position:relative;">
+                <div style="position:absolute; inset:0; background:rgba(0,0,0,0.35);"></div>
+                <div style="position:relative; z-index:2;">
+                    <span style="font-family:'Acherus Grotesque ExtraBold', sans-serif; font-size:16px; line-height:21.1px; letter-spacing:6px; color:#ffffff; text-transform:uppercase; display:block;">Localization &amp; AI</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="max-width:1200px; margin:0 auto; padding:0 2rem;">
+            <div style="text-align:center; margin:3rem 0 2rem;">
+                <div style="max-width:800px; margin:0 auto; text-align:left;">
+                    <h2 style="font-family:'Playfair Display','Georgia',serif; font-style:italic; font-size:20px; line-height:30.7px; letter-spacing:1.5px; color:#6d1e91; font-weight:400; margin:0 0 1rem 0;">Where language meets technology.</h2>
+                    <p style="margin:0; font-size:18px; line-height:29.2px; color:#000000; font-family:'Acherus Grotesque Light',sans-serif; font-weight:300;"><span style="color:#6d1e91; font-weight:400;">Localization &amp; AI</span> is about using technology to make communication more efficient, more accessible and more human. This section shows how I combine linguistic expertise with AI tools to solve complex multilingual challenges.</p>
+                </div>
+            </div>
+
+            <!-- CASE 01 — Chatbot / Decision Tree -->
+            <div style="padding:2rem 0 3rem; border-bottom:1px solid #d5c4d9;">
+                <div style="width:100%; margin-bottom:2.5rem;">
+                    <span class="case-number">Case 01</span>
+                    <span class="case-category">Knowledge Architecture &amp; AI</span>
+                    <h2 style="font-family:'Fiona Regular','Georgia',serif; font-size:clamp(2rem,4vw,3.2rem); line-height:1.15; letter-spacing:1px; font-weight:400; color:#1a1a1a; margin:0;">Making complex knowledge easy to navigate.</h2>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:2.5rem;">
+                    <div class="case-card">
+                        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                            <h3>The challenge</h3>
+                        </div>
+                        <p>During a large-scale migration of more than <strong style="color:#6d1e91;">15,000 knowledge articles</strong> into Salesforce, customer support agents were struggling to locate information quickly enough during live calls.</p>
+                    </div>
+                    <div class="case-card">
+                        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                            <h3>What I observed</h3>
+                        </div>
+                        <p>Articles contained multiple customer scenarios inside long, linear documentation. Average handling time targets were below <strong style="color:#6d1e91;">four minutes</strong>. Reading everything wasn't realistic.</p>
+                    </div>
+                    <div class="case-card">
+                        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                            <h3>My approach</h3>
+                        </div>
+                        <p>Instead of optimizing documentation, I redesigned the navigation model itself. Working alongside Process Engineering teams, I translated complex ARIS decision trees into guided user journeys designed for real call center behaviour.</p>
+                    </div>
+                    <div class="case-card">
+                        <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                            <h3>The solution</h3>
+                        </div>
+                        <p>I designed a structured decision-tree framework based on anchors, conditional navigation and standardized content architecture. The model was validated by <strong style="color:#6d1e91;">IBM engineering</strong> and became the company's new standard for interactive knowledge articles.</p>
+                    </div>
+                </div>
+
+                <!-- Chatbot Before/After -->
+                <div style="margin-top:2.5rem;">
+                    <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; color:#2d2d2d; text-align:center; margin-bottom:0.5rem;">🤖 Before &amp; After: From static articles to guided conversations</h4>
+                    <p style="text-align:center; font-size:0.95rem; color:#777; max-width:100%; margin-bottom:1.5rem;">The same content, redesigned for how people actually search.</p>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+                        <div style="background:#ffffff; border-radius:18px; padding:1.5rem; border:1px solid #e8e0e4; box-shadow:0 8px 30px rgba(0,0,0,0.04);">
+                            <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#c0392b; font-weight:500; display:block; margin-bottom:0.5rem;">Before: Static Article</span>
+                            <div style="background:#f8f0f0; border-radius:12px; padding:1rem; border:1px solid #e8d0d0; min-height:200px; overflow:hidden;">
+                                <div style="font-size:0.7rem; color:#555; line-height:1.6; font-family:'Courier New',monospace;">
+                                    <div style="background:#e8d0d0; padding:0.2rem 0.5rem; border-radius:4px; margin-bottom:0.3rem; font-weight:bold; color:#333;">System Steps – Exclude a Client</div>
+                                    <p style="margin:0.3rem 0;">1. To access the information on policy renewal, please navigate to the 'Client Procedures' section, then select 'Policy Management'.</p>
+                                    <p style="margin:0.3rem 0;">2. From there, you will find a link to the complete guide on policy renewals and associated documentation.</p>
+                                    <p style="margin:0.3rem 0; background:#f0e0e0; padding:0.2rem; border-radius:4px;">3. Be aware that this information might be spread across different articles, so a thorough search is recommended...</p>
+                                    <p style="margin:0.3rem 0;">4. Additional details about the renewal process can be found in the 'Annual Review' subsection...</p>
+                                    <p style="margin:0.3rem 0; color:#999;">5. Always verify with the legal department...</p>
+                                    <div style="text-align:center; margin-top:0.5rem; color:#c0392b; font-size:0.6rem;">⬇️ Scroll for more (and more, and more...)</div>
+                                </div>
+                            </div>
+                            <p style="font-size:0.8rem; color:#777; margin-top:0.5rem;">Long, linear, multi-scenario · Agents spend too much time searching</p>
+                        </div>
+                        <div style="background:#ffffff; border-radius:18px; padding:1.5rem; border:1px solid #6d1e91; box-shadow:0 8px 30px rgba(109,30,145,0.08);">
+                            <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#6d1e91; font-weight:500; display:block; margin-bottom:0.5rem;">After: Guided Chatbot Flow</span>
+                            <div style="background:#ede4f0; border-radius:12px; padding:1rem; border:1px solid #c4b0cc; min-height:200px;">
+                                <div style="font-family:'Courier New',monospace;">
+                                    <div style="background:#ffffff; border-radius:8px; padding:0.5rem; margin-bottom:0.5rem; border:1px solid #e8e0e4; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+                                        <div style="font-size:0.6rem; color:#6d1e91; font-weight:600;">🤖 Assistant</div>
+                                        <div style="font-size:0.7rem; color:#333; margin-top:0.2rem;">Choose a topic:</div>
+                                    </div>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.3rem; margin-bottom:0.5rem;">
+                                        <div style="background:#6d1e91; color:#fff; padding:0.4rem; border-radius:6px; text-align:center; font-size:0.65rem; font-weight:600; cursor:pointer; transition:0.3s;">Policy Renewal</div>
+                                        <div style="background:#6d1e91; color:#fff; padding:0.4rem; border-radius:6px; text-align:center; font-size:0.65rem; font-weight:600; cursor:pointer; transition:0.3s;">Account Activation</div>
+                                        <div style="background:#6d1e91; color:#fff; padding:0.4rem; border-radius:6px; text-align:center; font-size:0.65rem; font-weight:600; cursor:pointer; transition:0.3s;">Billing Inquiry</div>
+                                        <div style="background:#6d1e91; color:#fff; padding:0.4rem; border-radius:6px; text-align:center; font-size:0.65rem; font-weight:600; cursor:pointer; transition:0.3s;">Technical Issue</div>
+                                    </div>
+                                    <div style="background:#ffffff; border-radius:8px; padding:0.5rem; border:1px solid #e8e0e4; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+                                        <div style="font-size:0.6rem; color:#6d1e91; font-weight:600;">🤖 Assistant</div>
+                                        <div style="font-size:0.7rem; color:#333; margin-top:0.2rem; border-left:2px solid #6d1e91; padding-left:0.5rem;">To renew a policy, please follow these steps:<br>1. Navigate to 'Client Procedures'<br>2. Select 'Policy Management'<br>3. Click 'Renewal'<br><span style="color:#6d1e91; font-weight:600;">✔️ Done in 3 clicks</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="font-size:0.8rem; color:#6d1e91; margin-top:0.5rem; font-weight:400;">✅ Decision-based · 3 clicks · 30,000+ agents impacted</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top:2.5rem; display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; padding:2rem; background:#ffffff; border-radius:18px; border:1px solid #e8e0e4; box-shadow:0 8px 30px rgba(0,0,0,0.04);">
+                    <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">15,000+</strong><span style="font-size:0.8rem; color:#777;">Articles migrated</span></div>
+                    <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">30,000+</strong><span style="font-size:0.8rem; color:#777;">Support agents impacted</span></div>
+                    <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">IBM</strong><span style="font-size:0.8rem; color:#777;">Validation</span></div>
+                    <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">New</strong><span style="font-size:0.8rem; color:#777;">Organizational standard</span></div>
+                </div>
+
+                <div style="margin-top:2.5rem; padding:1.5rem 2rem; background:#f8f5f4; border-radius:16px; border-left:4px solid #cb8316; border-right:4px solid #cb8316;">
+                    <p style="font-size:0.95rem; color:#2d2d2d; margin:0; max-width:100%; text-align:center; font-weight:400;"><strong style="color:#6d1e91;">The key insight:</strong> Sometimes innovation isn't adding more information — it's removing friction.</p>
+                </div>
+
+                <!-- CASE 02 — AI Evaluation -->
+                <div style="padding:3rem 0 2rem; margin-top:2rem;">
+                    <div style="width:100%; margin-bottom:2.5rem;">
+                        <span class="case-number">Case 02</span>
+                        <span class="case-category">AI Evaluation &amp; Linguistics</span>
+                        <h2 style="font-family:'Fiona Regular','Georgia',serif; font-size:clamp(2rem,4vw,3.2rem); line-height:1.15; letter-spacing:1px; font-weight:400; color:#1a1a1a; margin:0;">Teaching AI to communicate better.</h2>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:2.5rem;">
+                        <div class="case-card">
+                            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                                <h3>The challenge</h3>
+                            </div>
+                            <p>Modern language models fail because they misunderstand context, culture, ambiguity, user intent and conversational expectations. <strong style="color:#6d1e91;">Those failures are often subtle, making them difficult to identify consistently.</strong></p>
+                        </div>
+                        <div class="case-card">
+                            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                                <h3>What I observed</h3>
+                            </div>
+                            <p>AI responses often sound fluent but are logically broken. <strong style="color:#6d1e91;">Fluency ≠ precision.</strong> My linguistic background allows me to distinguish grammatical quality from communicative quality.</p>
+                        </div>
+                        <div class="case-card">
+                            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                                <h3>My approach</h3>
+                            </div>
+                            <p>I evaluate responses the same way I evaluate human communication. Is the information grounded? Is the reasoning coherent? Does the answer actually solve the user's problem?</p>
+                        </div>
+                        <div class="case-card">
+                            <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.8rem;">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" fill="#6d1e91"/></svg>
+                                <h3>The solution</h3>
+                            </div>
+                            <p>Across multiple AI evaluation projects, I have annotated, ranked, rewritten and documented model behavior, producing detailed rationales that help improve future model performance. <strong style="color:#6d1e91;">Reproducible evaluation criteria</strong> are the goal.</p>
+                        </div>
+                    </div>
+
+                    <!-- Prompt Evaluation -->
+                    <div style="margin-top:2.5rem;">
+                        <h4 style="font-family:'Playfair Display',serif; font-size:1.2rem; color:#2d2d2d; text-align:center; margin-bottom:0.5rem;">🧠 From prompt to evaluation</h4>
+                        <p style="text-align:center; font-size:0.95rem; color:#777; max-width:100%; margin-bottom:1.5rem;">How I evaluate model responses — and why it matters.</p>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem;">
+                            <div style="background:#ffffff; border-radius:18px; padding:1.5rem; border:1px solid #e8e0e4; box-shadow:0 8px 30px rgba(0,0,0,0.04);">
+                                <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#6d1e91; font-weight:500; display:block; margin-bottom:0.5rem;">Prompt</span>
+                                <div style="background:#f8f5f4; border-radius:12px; padding:1rem; border:1px solid #e8e0e4; min-height:120px;">
+                                    <div style="font-size:0.75rem; color:#333; font-family:'Courier New',monospace; line-height:1.6;"><span style="color:#6d1e91; font-weight:600;">User:</span> "How do I reset my password if I forgot it?"</div>
+                                </div>
+                                <p style="font-size:0.8rem; color:#777; margin-top:0.5rem;">Simple question · Multiple possible answers</p>
+                            </div>
+                            <div style="background:#ffffff; border-radius:18px; padding:1.5rem; border:1px solid #c0392b; box-shadow:0 8px 30px rgba(192,57,43,0.06);">
+                                <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#c0392b; font-weight:500; display:block; margin-bottom:0.5rem;">Response A (AI)</span>
+                                <div style="background:#f8f0f0; border-radius:12px; padding:1rem; border:1px solid #e8d0d0; min-height:120px;">
+                                    <div style="font-size:0.75rem; color:#333; font-family:'Courier New',monospace; line-height:1.6;">"To reset your password, please click on the 'Forgot Password' link. You will receive an email with a link to reset your password. If you don't receive it, check your spam folder. Then, create a new password and confirm it. You're all set!"</div>
+                                </div>
+                                <p style="font-size:0.8rem; color:#c0392b; margin-top:0.5rem; font-weight:400;">❌ Fluent but generic · Doesn't consider user's context</p>
+                            </div>
+                            <div style="background:#ffffff; border-radius:18px; padding:1.5rem; border:1px solid #6d1e91; box-shadow:0 8px 30px rgba(109,30,145,0.08);">
+                                <span style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#6d1e91; font-weight:500; display:block; margin-bottom:0.5rem;">Response B + My Evaluation</span>
+                                <div style="background:#ede4f0; border-radius:12px; padding:1rem; border:1px solid #c4b0cc; min-height:120px;">
+                                    <div style="font-size:0.75rem; color:#333; font-family:'Courier New',monospace; line-height:1.6;">
+                                        <div style="background:#ffffff; border-radius:6px; padding:0.5rem; margin-bottom:0.3rem;">"To reset your password, go to the login page and click 'Forgot Password'. Follow the instructions sent to your registered email. If you're using a company account, contact your IT admin."</div>
+                                        <div style="background:#d4c4dc; border-radius:6px; padding:0.5rem; font-size:0.7rem; color:#2d2d2d;">✅ <strong>My reasoning:</strong> More helpful than A — accounts for enterprise context. <br>⚠️ Could add: "If you're locked out, use the recovery option."</div>
+                                    </div>
+                                </div>
+                                <p style="font-size:0.8rem; color:#6d1e91; margin-top:0.5rem; font-weight:400;">✅ Human evaluation · Context-aware · Actionable feedback</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:2.5rem; display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; padding:2rem; background:#ffffff; border-radius:18px; border:1px solid #e8e0e4; box-shadow:0 8px 30px rgba(0,0,0,0.04);">
+                        <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">RLHF</strong><span style="font-size:0.8rem; color:#777;">Evaluation</span></div>
+                        <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">Prompt</strong><span style="font-size:0.8rem; color:#777;">Engineering</span></div>
+                        <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">Comparative</strong><span style="font-size:0.8rem; color:#777;">Reasoning</span></div>
+                        <div style="text-align:center;"><strong style="font-family:'Fiona Regular','Georgia',serif; font-size:2.4rem; color:#6d1e91; font-weight:400; display:block;">Human-centered</strong><span style="font-size:0.8rem; color:#777;">AI feedback</span></div>
+                    </div>
+
+                    <div style="margin-top:2.5rem; padding:1.5rem 2rem; background:#f8f5f4; border-radius:16px; border-left:4px solid #cb8316; border-right:4px solid #cb8316;">
+                        <p style="font-size:0.95rem; color:#2d2d2d; margin:0; max-width:100%; text-align:center; font-weight:400;"><strong style="color:#6d1e91;">The bottom line:</strong> Good AI still depends on good humans. Linguistic expertise is what turns fluent text into effective communication.</p>
+                    </div>
+
+                    <div style="margin-top:3rem; padding:1.5rem 2rem; background:#f8f5f4; border-radius:16px; text-align:center; border-left:4px solid #cb8316; border-right:4px solid #cb8316;">
+                        <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.5rem; color:#2d2d2d; max-width:100%; margin:0;">"AI doesn't understand language. It learns patterns. <br />My job is to teach it what those patterns actually mean."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="site-footer">
+        <div class="footer-split">
+            <div class="footer-left">
+                <a href="mailto:ariane.etimo@email.com">GET IN<br />TOUCH</a>
+            </div>
+            <div class="footer-right">
+                <ul>
+                    <li><a href="#inclusive">Inclusive Communication</a></li>                    
+                    <li><a href="#coordination">Project Coordination</a></li>
+<li><a href="#localization-ai">Localization & AI</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Ariane Lesnyak · Localization &amp; Language Operations · São Paulo, Brazil</p>
+            <p class="small">Designed for MAPA Translations · Built with precision, empathy and purpose.</p>
+            <p class="tiny">© 2026 Ariane Lesnyak · All rights reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================================
+        // MENU
+        // ============================================================
+        const menuToggle = document.getElementById('menuToggle');
+        const hamburgerToggle = document.getElementById('hamburgerToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuBox = document.getElementById('menuBox');
+        const menuClose = document.getElementById('menuClose');
+
+        function openMenu() {
+            menuOverlay.classList.add('active');
+            menuBox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            menuOverlay.classList.remove('active');
+            menuBox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        menuToggle.addEventListener('click', openMenu);
+        hamburgerToggle.addEventListener('click', openMenu);
+        menuClose.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+        document.querySelectorAll('.menu-box a').forEach(l => l.addEventListener('click', closeMenu));
+
+        // ============================================================
+        // SCROLL REVEAL
+        // ============================================================
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
+
+        // ============================================================
+        // HERO BUTTON -> FOOTER
+        // ============================================================
+        document.querySelector('.btn-hero')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#site-footer')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // ============================================================
+        // TYPING ANIMATION
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const textToType = "Jorge is 70 years old and is one of the most dedicated janitors at the Paradise Motel, except for a single detail: he secretly records the audios of the guests.";
+            const typewriterElement = document.getElementById('typewriter');
+            let index = 0;
+
+            if (typewriterElement) {
+                typewriterElement.textContent = '';
+            }
+
+            function typeCharacter() {
+                if (index < textToType.length) {
+                    typewriterElement.textContent += textToType.charAt(index);
+                    index++;
+                    setTimeout(typeCharacter, 30);
+                }
+            }
+
+            setTimeout(typeCharacter, 500);
+        });
+
+        // ============================================================
+        // SERVICE SECTIONS — show/hide via anchor links
+        // ============================================================
+        function showSectionFromHash() {
+            const hash = window.location.hash;
+            if (hash) {
+                const sectionId = hash.replace('#', '');
+                const targetSection = document.getElementById(sectionId);
+
+                // Hide all service sections
+                document.querySelectorAll('.service-section').forEach(s => {
+                    s.classList.remove('visible');
+                });
+
+                // Show the target section
+                if (targetSection && targetSection.classList.contains('service-section')) {
+                    targetSection.classList.add('visible');
+                    setTimeout(() => {
+                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', showSectionFromHash);
+        window.addEventListener('hashchange', showSectionFromHash);
+
+        // Also handle clicks on footer links to show sections
+        document.querySelectorAll('.footer-right a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Let the hash change happen naturally, then show section
+                setTimeout(showSectionFromHash, 50);
+            });
+        });
+    </script>
+</body>
+</html>
